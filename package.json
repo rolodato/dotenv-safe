@@ -12,8 +12,7 @@
   "author": "Rodrigo López Dato <rlopezdato@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^1.2.0",
-    "lodash": "^3.10.1"
+    "dotenv": "^1.2.0"
   },
   "devDependencies": {
     "assert": "^1.3.0"
