@@ -4,7 +4,7 @@
   "description": "Load environment variables from .env and ensure they are defined",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "set -e && cd test && node **.js"
   },
   "keywords": [
     "dotenv"
