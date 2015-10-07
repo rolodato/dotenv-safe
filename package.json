@@ -9,6 +9,10 @@
   "keywords": [
     "dotenv"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rolodato/dotenv-safe.git"
+  },
   "author": "Rodrigo López Dato <rlopezdato@gmail.com>",
   "license": "MIT",
   "dependencies": {
