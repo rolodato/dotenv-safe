@@ -8,7 +8,7 @@ along with your project.
 # Installation
 
 ```
-npm install --save dotenv
+npm install --save dotenv-load
 ```
 
 # Usage
