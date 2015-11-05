@@ -13,7 +13,7 @@ module.exports = {
   config: function(options) {
     options = options || {};
     dotenv.load(options);
-    var sampleVars = dotenv.parse(fs.readFileSync(options.sample || '.env.sample'));
+    var sampleVars = dotenv.parse(fs.readFileSync(options.sample || '.env.sample' || '.env.example'));
     var missing = difference(Object.keys(sampleVars), Object.keys(process.env));
     if (missing.length > 0) {
       throw new Error('Missing environment variables: ' + missing.join(', '));
