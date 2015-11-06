@@ -2,7 +2,7 @@
 
 Identical to [`dotenv`](https://github.com/motdotla/dotenv), but ensures that
 all necessary environment variables are defined after reading from `.env`.
-These needed variables are read from `.env.sample`, which should be commited
+These needed variables are read from `.env.example`, which should be commited
 along with your project.
 
 # Installation
@@ -20,14 +20,14 @@ require('dotenv-safe').load();
 ```
 
 This will load environment variables from `.env` as usual, but will also read
-any variables defined in `.env.sample`. If any variables are missing from
+any variables defined in `.env.example`. If any variables are missing from
 `.env`, an exception listing them will be thrown. Otherwise, returns `true`.
 
 `dotenv-safe` compares the actual environment after loading `.env` with the
-sample file, so it will work correctly if environment variables are missing
+example file, so it will work correctly if environment variables are missing
 in the `.env` but provided through other means such as a shell script.
 
-You can use `.env.sample` or `.env.example` or provide a different filename:
+You can use `.env.example`, `.env.sample` or provide a different filename:
 
 ```js
 require('dotenv-safe').load({sample: './.my-env-sample-filename'});
@@ -42,7 +42,7 @@ SECRET=topsecret
 ```
 
 ```dosini
-# .env.sample, commited to repo
+# .env.example, commited to repo
 SECRET=
 TOKEN=
 KEY=
@@ -53,7 +53,7 @@ require('dotenv-safe').load();
 ```
 
 Since the provided `.env` file does not contain all the variables defined in
-`.env.sample`, an exception is thrown:
+`.env.example`, an exception is thrown:
 
 ```
 Error: Missing environment variables: TOKEN, KEY
