@@ -27,7 +27,7 @@ any variables defined in `.env.sample`. If any variables are missing from
 sample file, so it will work correctly if environment variables are missing
 in the `.env` but provided through other means such as a shell script.
 
-A different filename for `.env.sample` can be provided:
+You can use `.env.sample` or `.env.example` or provide a different filename:
 
 ```js
 require('dotenv-safe').load({sample: './.my-env-sample-filename'});
