@@ -11,29 +11,6 @@ along with your project.
 npm install --save dotenv-safe
 ```
 
-# Usage
-
-Requiring and loading is identical:
-
-```js
-require('dotenv-safe').load();
-```
-
-This will load environment variables from `.env` as usual, but will also read
-any variables defined in `.env.example`. If any variables are missing from
-`.env`, an exception listing them will be thrown. Otherwise, returns `true`.
-
-`dotenv-safe` compares the actual environment after loading `.env` with the
-example file, so it will work correctly if environment variables are missing
-in the `.env` but provided through other means such as a shell script.
-
-You can use `.env.example`, `.env.sample` or provide a different filename:
-
-```js
-require('dotenv-safe').load({sample: './.my-env-sample-filename'});
-```
-
-
 # Example
 
 ```dosini
@@ -59,7 +36,27 @@ Since the provided `.env` file does not contain all the variables defined in
 Error: Missing environment variables: TOKEN, KEY
 ```
 
+# Usage
 
+Requiring and loading is identical:
+
+```js
+require('dotenv-safe').load();
+```
+
+This will load environment variables from `.env` as usual, but will also read
+any variables defined in `.env.example`. If any variables are missing from
+`.env`, an exception listing them will be thrown. Otherwise, returns `true`.
+
+`dotenv-safe` compares the actual environment after loading `.env` with the
+example file, so it will work correctly if environment variables are missing
+in the `.env` but provided through other means such as a shell script.
+
+You can use `.env.example`, `.env.sample` or provide a different filename:
+
+```js
+require('dotenv-safe').load({sample: './.my-env-sample-filename'});
+```
 
 # Options
 
