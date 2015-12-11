@@ -9,12 +9,22 @@ function difference(arrA, arrB) {
   });
 }
 
+function compact(obj) {
+  var result = {};
+  Object.keys(obj).forEach(function(key) {
+    if (obj[key]) {
+      result[key] = obj[key];
+    }
+  });
+  return result;
+}
+
 module.exports = {
   config: function(options) {
     options = options || {};
     dotenv.load(options);
     var sampleVars = dotenv.parse(fs.readFileSync(options.sample || '.env.example'));
-    var missing = difference(Object.keys(sampleVars), Object.keys(process.env));
+    var missing = difference(Object.keys(sampleVars), Object.keys(compact(process.env)));
     if (missing.length > 0) {
       throw new Error('Missing environment variables: ' + missing.join(', '));
     }
