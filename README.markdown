@@ -52,7 +52,7 @@ any variables defined in `.env.example`. If any variables are missing from
 example file, so it will work correctly if environment variables are missing
 in the `.env` but provided through other means such as a shell script.
 
-You can use `.env.example`, `.env.sample` or provide a different filename:
+You can use `.env.example` or provide a different filename:
 
 ```js
 require('dotenv-safe').load({sample: './.my-env-sample-filename'});
