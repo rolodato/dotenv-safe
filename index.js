@@ -12,7 +12,7 @@ function difference(arrA, arrB) {
 function compact(obj) {
   var result = {};
   Object.keys(obj).forEach(function(key) {
-    if (obj[key]) {
+    if (obj.hasOwnProperty(key)) {
       result[key] = obj[key];
     }
   });
