@@ -24,8 +24,10 @@ module.exports = {
     options = options || {};
     dotenv.load(options);
     var sampleVars = dotenv.parse(fs.readFileSync(options.sample || '.env.example'));
+    var allowEmptyValues = options.allowEmptyValues || false;
     var missing = difference(Object.keys(sampleVars), Object.keys(compact(process.env)));
-    if (missing.length > 0) {
+
+    if (missing.length > 0 && !allowEmptyValues) {
       throw new Error('Missing environment variables: ' + missing.join(', '));
     }
     return true;

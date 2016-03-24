@@ -62,6 +62,15 @@ require('dotenv-safe').load({sample: './.my-env-sample-filename'});
 
 [Same options and methods supported by `dotenv`](https://github.com/motdotla/dotenv#options).
 
+An extra option has been added to ignore exception throwing when a variable exists in the `.env` file but is empty: `allowEmptyValues`.
+
+```js
+require('dotenv-safe').load({
+    sample: __dirname + '/.my-env-sample-filename',
+    allowEmptyValues: true
+});
+```
+
 # Motivation
 
 I regularly use apps that depend on `.env` files but don't validate if all
