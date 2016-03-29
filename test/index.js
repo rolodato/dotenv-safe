@@ -40,4 +40,17 @@ describe('dotenv-safe', function () {
             /Missing environment variables/
         );
     });
+
+    it('throws error when a variable does not exist and allowEmptyValues option is true', function () {
+        assert.throws(
+            function () {
+                dotenv.load({
+                    sample: '.env.fail',
+                    allowEmptyValues: true
+                });
+                // Consider providing an Error class
+            },
+            /Missing environment variables/
+        );
+    });
 });
