@@ -1,6 +1,6 @@
 # dotenv-safe
 
-Identical to [`dotenv`](https://github.com/motdotla/dotenv), but ensures that
+A library that augments [`dotenv`](https://github.com/motdotla/dotenv) to ensure that
 all necessary environment variables are defined after reading from `.env`.
 These needed variables are read from `.env.example`, which should be commited
 along with your project.
