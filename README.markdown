@@ -14,6 +14,7 @@ npm install --save dotenv-safe
 ```dosini
 # .env, private
 SECRET=topsecret
+TOKEN=
 ```
 
 ```dosini
