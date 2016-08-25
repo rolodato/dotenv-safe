@@ -48,24 +48,26 @@ Otherwise, returns `true`.
 
 `dotenv-safe` compares the actual environment after loading `.env` with the example file, so it will work correctly if environment variables are missing in the `.env` but provided through other means such as a shell script.
 
-You can use `.env.example` or provide a different filename:
-
-```js
-require('dotenv-safe').load({sample: './.my-env-sample-filename'});
-```
-
 # Options
 
 [Same options and methods supported by `dotenv`](https://github.com/motdotla/dotenv#options).
 
-An extra option has been added to ignore exception throwing when a variable exists in the `.env` file but is empty: `allowEmptyValues`.
-
 ```js
 require('dotenv-safe').load({
-    sample: __dirname + '/.my-env-sample-filename',
-    allowEmptyValues: true
+    allowEmptyValues: true,
+    sample: './.my-env-sample-filename'
 });
 ```
+
+## `allowEmptyValues`
+
+If a variable is defined in the example file and has an empty value, enabling this option will not throw an error.
+Defaults to `false`.
+
+## `sample`
+
+Path to example environment file.
+Defaults to `.env.example`.
 
 # Motivation
 
