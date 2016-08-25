@@ -1,9 +1,7 @@
 # dotenv-safe
 
-Identical to [`dotenv`](https://github.com/motdotla/dotenv), but ensures that
-all necessary environment variables are defined after reading from `.env`.
-These needed variables are read from `.env.example`, which should be commited
-along with your project.
+Identical to [`dotenv`](https://github.com/motdotla/dotenv), but ensures that all necessary environment variables are defined after reading from `.env`.
+These needed variables are read from `.env.example`, which should be commited along with your project.
 
 # Installation
 
@@ -44,13 +42,11 @@ Requiring and loading is identical:
 require('dotenv-safe').load();
 ```
 
-This will load environment variables from `.env` as usual, but will also read
-any variables defined in `.env.example`. If any variables are missing from
-`.env`, an exception listing them will be thrown. Otherwise, returns `true`.
+This will load environment variables from `.env` as usual, but will also read any variables defined in `.env.example`.
+If any variables are missing from `.env`, an exception listing them will be thrown.
+Otherwise, returns `true`.
 
-`dotenv-safe` compares the actual environment after loading `.env` with the
-example file, so it will work correctly if environment variables are missing
-in the `.env` but provided through other means such as a shell script.
+`dotenv-safe` compares the actual environment after loading `.env` with the example file, so it will work correctly if environment variables are missing in the `.env` but provided through other means such as a shell script.
 
 You can use `.env.example` or provide a different filename:
 
@@ -73,8 +69,5 @@ require('dotenv-safe').load({
 
 # Motivation
 
-I regularly use apps that depend on `.env` files but don't validate if all
-the necessary variables have been defined correctly.
-Instead of having to document and validate this manually, I prefer to commit
-a sample `.env` file (no values, key names only) which can be used as a
-reference.
+I regularly use apps that depend on `.env` files but don't validate if all the necessary variables have been defined correctly.
+Instead of having to document and validate this manually, I prefer to commit a self-documenting `.env` file (no values, key names only) which can be used as a reference.
