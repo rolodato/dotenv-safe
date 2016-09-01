@@ -62,7 +62,7 @@ require('dotenv-safe').load({
 
 ## `allowEmptyValues`
 
-If a variable is defined in the example file and has an empty value, enabling this option will not throw an error.
+If a variable is defined in the example file and has an empty value in the environment, enabling this option will not throw an error after loading.
 Defaults to `false`.
 
 ## `sample`
