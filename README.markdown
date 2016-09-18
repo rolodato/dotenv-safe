@@ -12,16 +12,16 @@ npm install --save dotenv-safe
 # Example
 
 ```dosini
-# .env, private
-SECRET=topsecret
-TOKEN=
-```
-
-```dosini
 # .env.example, commited to repo
 SECRET=
 TOKEN=
 KEY=
+```
+
+```dosini
+# .env, private
+SECRET=topsecret
+TOKEN=
 ```
 
 ```js
