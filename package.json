@@ -9,6 +9,10 @@
   "keywords": [
     "dotenv"
   ],
+  "files": [
+    "index.js",
+    "config.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/rolodato/dotenv-safe.git"
