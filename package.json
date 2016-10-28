@@ -1,6 +1,6 @@
 {
   "name": "dotenv-safe",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "Load environment variables from .env and ensure they are defined",
   "main": "index.js",
   "scripts": {
