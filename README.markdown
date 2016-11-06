@@ -44,10 +44,10 @@ require('dotenv-safe').load();
 ```
 
 This will load environment variables from `.env` as usual, but will also read any variables defined in `.env.example`.
-If any variables are missing from `.env`, an exception listing them will be thrown.
+If any variables are missing from the environment, an exception listing them will be thrown.
 Otherwise, returns `true`.
 
-`dotenv-safe` compares the actual environment after loading `.env` with the example file, so it will work correctly if environment variables are missing in the `.env` but provided through other means such as a shell script.
+`dotenv-safe` compares the actual environment after loading `.env` (if any)  with the example file, so it will work correctly if environment variables are missing in `.env` but provided through other means such as a shell script.
 
 # Options
 
