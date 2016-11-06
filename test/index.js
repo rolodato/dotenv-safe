@@ -1,6 +1,7 @@
 var chai = require('chai');
 var assert = chai.assert;
 var dotenv = require('../index.js');
+var fs = require('fs');
 
 describe('dotenv-safe', function () {
     it('does not throw error when all is well', function () {
@@ -14,6 +15,24 @@ describe('dotenv-safe', function () {
             sample: '.env.allowEmpty',
             allowEmptyValues: true
         }));
+    });
+
+    it('does not throw error when .env is missing but variables exist', function () {
+        // mock: rename .env to .env.backup
+        fs.renameSync('.env', '.env.backup');
+
+        // mock: process.env.HELLO
+        process.env.HELLO = 'WORLD';
+
+        assert.isOk(dotenv.load({
+            sample: '.env.noDotEnv'
+        }));
+
+        // reset mock: process.env.HELLO
+        delete process.env.HELLO;
+
+        // reset mock: rename .env.backup to .env
+        fs.renameSync('.env.backup', '.env');
     });
 
     it('throws error when a variable is missing', function () {
