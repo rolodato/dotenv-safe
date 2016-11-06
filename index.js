@@ -22,6 +22,7 @@ function compact (obj) {
 module.exports = {
     config: function (options) {
         options = options || {};
+        options.silent = options.silent || !fs.existsSync('.env');
         dotenv.load(options);
         var sampleVars = dotenv.parse(fs.readFileSync(options.sample || '.env.example'));
         var allowEmptyValues = options.allowEmptyValues || false;
