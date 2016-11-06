@@ -25,7 +25,7 @@ describe('dotenv-safe', function () {
         process.env.HELLO = 'WORLD';
 
         assert.isOk(dotenv.load({
-            sample: '.env.success'
+            sample: '.env.noDotEnv'
         }));
 
         // reset mock: process.env.HELLO
