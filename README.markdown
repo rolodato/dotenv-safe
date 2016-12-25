@@ -32,7 +32,13 @@ Since the provided `.env` file does not contain all the variables defined in
 `.env.example`, an exception is thrown:
 
 ```
-Error: Missing environment variables: TOKEN, KEY
+MissingEnvVarsError: The folowing variables are defined in .env.example but are not defined in the environment: TOKEN, KEY.
+Make sure to add them to .env or directly to the environment.
+If you expect any of these missing variables to be empty, you can use the allowEmptyValues option:
+
+require('dotenv-safe').load({
+  allowEmptyValues: true
+});
 ```
 
 # Usage
@@ -44,10 +50,10 @@ require('dotenv-safe').load();
 ```
 
 This will load environment variables from `.env` as usual, but will also read any variables defined in `.env.example`.
-If any variables are missing from the environment, an exception listing them will be thrown.
+If any variables are missing from the environment, a [`MissingEnvVarsError`](MissingEnvVarsError.js) will be thrown, which lists the missing variables.
 Otherwise, returns `true`.
 
-`dotenv-safe` compares the actual environment after loading `.env` (if any)  with the example file, so it will work correctly if environment variables are missing in `.env` but provided through other means such as a shell script.
+`dotenv-safe` compares the actual environment after loading `.env` (if any) with the example file, so it will work correctly if environment variables are missing in `.env` but provided through other means such as a shell script.
 
 # Options
 

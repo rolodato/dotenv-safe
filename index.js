@@ -2,6 +2,7 @@
 
 var dotenv = require('dotenv');
 var fs = require('fs');
+var MissingEnvVarsError = require('./MissingEnvVarsError.js');
 
 function difference (arrA, arrB) {
     return arrA.filter(function (a) {
@@ -27,13 +28,14 @@ module.exports = {
         // Original object that is parsed by dotenv.
         var parsedObj = dotenv.load(options);
 
-        var sampleVars = dotenv.parse(fs.readFileSync(options.sample || '.env.example'));
+        var sample = options.sample || '.env.example';
+        var sampleVars = dotenv.parse(fs.readFileSync(sample));
         var allowEmptyValues = options.allowEmptyValues || false;
         var processEnv = allowEmptyValues ? process.env : compact(process.env);
         var missing = difference(Object.keys(sampleVars), Object.keys(processEnv));
 
         if (missing.length > 0) {
-            throw new Error('Missing environment variables: ' + missing.join(', '));
+            throw new MissingEnvVarsError(allowEmptyValues, options.path || '.env', sample, missing);
         }
 
         // return original object or assemble from process.env
@@ -48,3 +50,4 @@ module.exports = {
 };
 
 module.exports.load = module.exports.config;
+module.exports.MissingEnvVarsError = MissingEnvVarsError;

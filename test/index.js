@@ -1,6 +1,7 @@
 var chai = require('chai');
 var assert = chai.assert;
 var dotenv = require('../index.js');
+var MissingEnvVarsError = dotenv.MissingEnvVarsError;
 var fs = require('fs');
 
 describe('dotenv-safe', function () {
@@ -41,9 +42,8 @@ describe('dotenv-safe', function () {
                 dotenv.load({
                     sample: '.env.fail'
                 });
-                // Consider providing an Error class
             },
-            /Missing environment variables/
+            MissingEnvVarsError
         );
     });
 
@@ -54,9 +54,8 @@ describe('dotenv-safe', function () {
                     sample: '.env.allowEmpty',
                     allowEmptyValues: false
                 });
-                // Consider providing an Error class
             },
-            /Missing environment variables/
+            MissingEnvVarsError
         );
     });
 
@@ -67,9 +66,8 @@ describe('dotenv-safe', function () {
                     sample: '.env.fail',
                     allowEmptyValues: true
                 });
-                // Consider providing an Error class
             },
-            /Missing environment variables/
+            MissingEnvVarsError
         );
     });
 
