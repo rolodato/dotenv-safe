@@ -72,4 +72,39 @@ describe('dotenv-safe', function () {
             /Missing environment variables/
         );
     });
+
+    it('returns an object with parsed .env', function () {
+        assert.deepEqual(
+            { HELLO: 'world', EMPTY: '' },
+            dotenv.load({
+                sample: '.env.allowEmpty',
+                allowEmptyValues: true
+            })
+        )
+    });
+
+    it('returns an object with values from process.env in case when .env does not exist', function () {
+        // mock: rename .env to .env.backup
+        fs.renameSync('.env', '.env.backup');
+
+        // mock: process.env.HELLO
+        process.env.HELLO = 'WORLD';
+
+        assert.deepEqual(
+            { HELLO: 'WORLD' },
+            dotenv.load({
+                sample: '.env.noDotEnv'
+            })
+        )
+
+        assert.isOk(dotenv.load({
+            sample: '.env.noDotEnv'
+        }));
+
+        // reset mock: process.env.HELLO
+        delete process.env.HELLO;
+
+        // reset mock: rename .env.backup to .env
+        fs.renameSync('.env.backup', '.env');
+    });
 });
