@@ -40,8 +40,8 @@ module.exports = {
         return parsedObj
           ? parsedObj
           : Object.keys(sampleVars).reduce(function (acc, key) {
-            acc[key] = process.env[key]
-            return acc;
+              acc[key] = process.env[key];
+              return acc;
           }, {});
     },
     parse: dotenv.parse

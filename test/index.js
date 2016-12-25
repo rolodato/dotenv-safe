@@ -80,7 +80,7 @@ describe('dotenv-safe', function () {
                 sample: '.env.allowEmpty',
                 allowEmptyValues: true
             })
-        )
+        );
     });
 
     it('returns an object with values from process.env in case when .env does not exist', function () {
@@ -95,7 +95,7 @@ describe('dotenv-safe', function () {
             dotenv.load({
                 sample: '.env.noDotEnv'
             })
-        )
+        );
 
         assert.isOk(dotenv.load({
             sample: '.env.noDotEnv'
