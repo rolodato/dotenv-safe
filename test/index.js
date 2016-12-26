@@ -3,22 +3,23 @@ var assert = chai.assert;
 var dotenv = require('../index.js');
 var MissingEnvVarsError = dotenv.MissingEnvVarsError;
 var fs = require('fs-extra');
+var clone = require('lodash.clonedeep');
 
 describe('dotenv-safe', function () {
     var originalEnvironment;
 
     before(function (done) {
-        // No need to deep copy, all values are strings
-        originalEnvironment = Object.assign({}, process.env);
+        assert.equal(process.env.HELLO, 'fromTheOtherSide');
+        originalEnvironment = clone(process.env);
         fs.mkdirs('envs', done);
     });
 
     beforeEach(function (done) {
+        process.env = clone(originalEnvironment);
         fs.copy('original', 'envs', done);
     });
 
     afterEach(function (done) {
-        process.env = originalEnvironment;
         fs.emptyDir('envs', done);
     });
 
@@ -85,5 +86,13 @@ describe('dotenv-safe', function () {
             },
             MissingEnvVarsError
         );
+    });
+
+    it('does not overwrite externally set environment variables', function () {
+        dotenv.load({
+            sample: 'envs/.env.success',
+            path: 'envs/.env'
+        });
+        assert.equal(process.env.HELLO, 'fromTheOtherSide');
     });
 });
