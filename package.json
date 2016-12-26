@@ -4,7 +4,7 @@
   "description": "Load environment variables from .env and ensure they are defined",
   "main": "index.js",
   "scripts": {
-    "test": "cd test && mocha -CR spec index.js"
+    "test": "cd test && HELLO=fromTheOtherSide mocha -CR spec index.js"
   },
   "keywords": [
     "dotenv"
@@ -24,6 +24,8 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "fs-extra": "^1.0.0",
+    "lodash.clonedeep": "^4.5.0",
     "mocha": "^2.4.5"
   }
 }

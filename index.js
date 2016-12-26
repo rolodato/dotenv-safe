@@ -24,10 +24,7 @@ module.exports = {
     config: function (options) {
         options = options || {};
         options.silent = options.silent || !fs.existsSync('.env');
-
-        // Original object that is parsed by dotenv.
-        var parsedObj = dotenv.load(options);
-
+        dotenv.load(options);
         var sample = options.sample || '.env.example';
         var sampleVars = dotenv.parse(fs.readFileSync(sample));
         var allowEmptyValues = options.allowEmptyValues || false;
@@ -38,13 +35,12 @@ module.exports = {
             throw new MissingEnvVarsError(allowEmptyValues, options.path || '.env', sample, missing);
         }
 
-        // return original object or assemble from process.env
-        return parsedObj
-          ? parsedObj
-          : Object.keys(sampleVars).reduce(function (acc, key) {
-              acc[key] = process.env[key];
-              return acc;
-          }, {});
+        // Assemble result object from example file and environment
+        var result = Object.keys(sampleVars).reduce(function (acc, key) {
+            acc[key] = process.env[key];
+            return acc;
+        }, {});
+        return { parsed: result };
     },
     parse: dotenv.parse
 };

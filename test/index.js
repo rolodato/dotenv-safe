@@ -2,45 +2,60 @@ var chai = require('chai');
 var assert = chai.assert;
 var dotenv = require('../index.js');
 var MissingEnvVarsError = dotenv.MissingEnvVarsError;
-var fs = require('fs');
+var fs = require('fs-extra');
+var clone = require('lodash.clonedeep');
 
 describe('dotenv-safe', function () {
+    var originalEnvironment;
+
+    before(function (done) {
+        assert.equal(process.env.HELLO, 'fromTheOtherSide');
+        originalEnvironment = clone(process.env);
+        fs.mkdirs('envs', done);
+    });
+
+    beforeEach(function (done) {
+        process.env = clone(originalEnvironment);
+        fs.copy('original', 'envs', done);
+    });
+
+    afterEach(function (done) {
+        fs.emptyDir('envs', done);
+    });
+
+    after(function (done) {
+        fs.remove('envs', done);
+    });
+
     it('does not throw error when all is well', function () {
         assert.isOk(dotenv.load({
-            sample: '.env.success'
+            sample: 'envs/.env.success',
+            path: 'envs/.env'
         }));
     });
 
     it('does not throw error when variable exists but is empty and allowEmptyValues option is true', function () {
         assert.isOk(dotenv.load({
-            sample: '.env.allowEmpty',
+            sample: 'envs/.env.allowEmpty',
+            path: 'envs/.env',
             allowEmptyValues: true
         }));
     });
 
     it('does not throw error when .env is missing but variables exist', function () {
-        // mock: rename .env to .env.backup
-        fs.renameSync('.env', '.env.backup');
-
-        // mock: process.env.HELLO
         process.env.HELLO = 'WORLD';
 
         assert.isOk(dotenv.load({
-            sample: '.env.noDotEnv'
+            sample: 'envs/.env.noDotEnv'
         }));
-
-        // reset mock: process.env.HELLO
-        delete process.env.HELLO;
-
-        // reset mock: rename .env.backup to .env
-        fs.renameSync('.env.backup', '.env');
     });
 
     it('throws error when a variable is missing', function () {
         assert.throws(
             function () {
                 dotenv.load({
-                    sample: '.env.fail'
+                    sample: 'envs/.env.fail',
+                    path: 'envs/.env'
                 });
             },
             MissingEnvVarsError
@@ -51,7 +66,8 @@ describe('dotenv-safe', function () {
         assert.throws(
             function () {
                 dotenv.load({
-                    sample: '.env.allowEmpty',
+                    sample: 'envs/.env.allowEmpty',
+                    path: 'envs/.env',
                     allowEmptyValues: false
                 });
             },
@@ -63,7 +79,8 @@ describe('dotenv-safe', function () {
         assert.throws(
             function () {
                 dotenv.load({
-                    sample: '.env.fail',
+                    sample: 'envs/.env.fail',
+                    path: 'envs/.env',
                     allowEmptyValues: true
                 });
             },
@@ -73,36 +90,29 @@ describe('dotenv-safe', function () {
 
     it('returns an object with parsed .env', function () {
         assert.deepEqual(
-            { HELLO: 'world', EMPTY: '' },
+            { parsed: { EMPTY: '' } },
             dotenv.load({
-                sample: '.env.allowEmpty',
+                sample: 'envs/.env.allowEmpty',
+                path: 'envs/.env',
                 allowEmptyValues: true
             })
         );
     });
 
     it('returns an object with values from process.env in case when .env does not exist', function () {
-        // mock: rename .env to .env.backup
-        fs.renameSync('.env', '.env.backup');
-
-        // mock: process.env.HELLO
-        process.env.HELLO = 'WORLD';
-
         assert.deepEqual(
-            { HELLO: 'WORLD' },
+            { parsed: { HELLO: 'fromTheOtherSide' } },
             dotenv.load({
-                sample: '.env.noDotEnv'
+                sample: 'envs/.env.noDotEnv'
             })
         );
+    });
 
-        assert.isOk(dotenv.load({
-            sample: '.env.noDotEnv'
-        }));
-
-        // reset mock: process.env.HELLO
-        delete process.env.HELLO;
-
-        // reset mock: rename .env.backup to .env
-        fs.renameSync('.env.backup', '.env');
+    it('does not overwrite externally set environment variables', function () {
+        dotenv.load({
+            sample: 'envs/.env.success',
+            path: 'envs/.env'
+        });
+        assert.equal(process.env.HELLO, 'fromTheOtherSide');
     });
 });
