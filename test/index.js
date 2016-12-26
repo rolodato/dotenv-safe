@@ -2,45 +2,59 @@ var chai = require('chai');
 var assert = chai.assert;
 var dotenv = require('../index.js');
 var MissingEnvVarsError = dotenv.MissingEnvVarsError;
-var fs = require('fs');
+var fs = require('fs-extra');
 
 describe('dotenv-safe', function () {
+    var originalEnvironment;
+
+    before(function (done) {
+        // No need to deep copy, all values are strings
+        originalEnvironment = Object.assign({}, process.env);
+        fs.mkdirs('envs', done);
+    });
+
+    beforeEach(function (done) {
+        fs.copy('original', 'envs', done);
+    });
+
+    afterEach(function (done) {
+        process.env = originalEnvironment;
+        fs.emptyDir('envs', done);
+    });
+
+    after(function (done) {
+        fs.remove('envs', done);
+    });
+
     it('does not throw error when all is well', function () {
         assert.isOk(dotenv.load({
-            sample: '.env.success'
+            sample: 'envs/.env.success',
+            path: 'envs/.env'
         }));
     });
 
     it('does not throw error when variable exists but is empty and allowEmptyValues option is true', function () {
         assert.isOk(dotenv.load({
-            sample: '.env.allowEmpty',
+            sample: 'envs/.env.allowEmpty',
+            path: 'envs/.env',
             allowEmptyValues: true
         }));
     });
 
     it('does not throw error when .env is missing but variables exist', function () {
-        // mock: rename .env to .env.backup
-        fs.renameSync('.env', '.env.backup');
-
-        // mock: process.env.HELLO
         process.env.HELLO = 'WORLD';
 
         assert.isOk(dotenv.load({
-            sample: '.env.noDotEnv'
+            sample: 'envs/.env.noDotEnv'
         }));
-
-        // reset mock: process.env.HELLO
-        delete process.env.HELLO;
-
-        // reset mock: rename .env.backup to .env
-        fs.renameSync('.env.backup', '.env');
     });
 
     it('throws error when a variable is missing', function () {
         assert.throws(
             function () {
                 dotenv.load({
-                    sample: '.env.fail'
+                    sample: 'envs/.env.fail',
+                    path: 'envs/.env'
                 });
             },
             MissingEnvVarsError
@@ -51,7 +65,8 @@ describe('dotenv-safe', function () {
         assert.throws(
             function () {
                 dotenv.load({
-                    sample: '.env.allowEmpty',
+                    sample: 'envs/.env.allowEmpty',
+                    path: 'envs/.env',
                     allowEmptyValues: false
                 });
             },
@@ -63,7 +78,8 @@ describe('dotenv-safe', function () {
         assert.throws(
             function () {
                 dotenv.load({
-                    sample: '.env.fail',
+                    sample: 'envs/.env.fail',
+                    path: 'envs/.env',
                     allowEmptyValues: true
                 });
             },
