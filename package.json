@@ -20,7 +20,7 @@
   "author": "Rodrigo López Dato <rlopezdato@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^2.0.0"
+    "dotenv": "github:motdotla/dotenv#fdd0923e82e12a6e29b65898990201857141e75d"
   },
   "devDependencies": {
     "chai": "^3.5.0",

@@ -23,8 +23,15 @@ function compact (obj) {
 module.exports = {
     config: function (options) {
         options = options || {};
-        options.silent = options.silent || !fs.existsSync('.env');
-        dotenv.load(options);
+        var dotenvResult = dotenv.load(options);
+        if (dotenvResult.error) {
+            // Missing .env can be ignored if all vars are present in environment
+            if (dotenvResult.error.code === 'ENOENT') {
+                dotenvResult = { parsed: {} };
+            } else {
+                throw dotenvResult.error;
+            }
+        }
         var sample = options.sample || '.env.example';
         var sampleVars = dotenv.parse(fs.readFileSync(sample));
         var allowEmptyValues = options.allowEmptyValues || false;
@@ -35,12 +42,15 @@ module.exports = {
             throw new MissingEnvVarsError(allowEmptyValues, options.path || '.env', sample, missing);
         }
 
-        // Assemble result object from example file and environment
-        var result = Object.keys(sampleVars).reduce(function (acc, key) {
+        // Key/value pairs defined in example file and resolved from environment
+        var required = Object.keys(sampleVars).reduce(function (acc, key) {
             acc[key] = process.env[key];
             return acc;
         }, {});
-        return { parsed: result };
+        return {
+            parsed: dotenvResult.parsed,
+            required: required
+        };
     },
     parse: dotenv.parse
 };
