@@ -25,12 +25,7 @@ module.exports = {
         options = options || {};
         var dotenvResult = dotenv.load(options);
         if (dotenvResult.error) {
-            // Missing .env can be ignored if all vars are present in environment
-            if (dotenvResult.error.code === 'ENOENT') {
-                dotenvResult = { parsed: {} };
-            } else {
-                throw dotenvResult.error;
-            }
+            dotenvResult.parsed = {};
         }
         var sample = options.sample || '.env.example';
         var sampleVars = dotenv.parse(fs.readFileSync(sample));
@@ -39,7 +34,7 @@ module.exports = {
         var missing = difference(Object.keys(sampleVars), Object.keys(processEnv));
 
         if (missing.length > 0) {
-            throw new MissingEnvVarsError(allowEmptyValues, options.path || '.env', sample, missing);
+            throw new MissingEnvVarsError(allowEmptyValues, options.path || '.env', sample, missing, dotenvResult.error);
         }
 
         // Key/value pairs defined in example file and resolved from environment
@@ -47,10 +42,14 @@ module.exports = {
             acc[key] = process.env[key];
             return acc;
         }, {});
-        return {
+        var result = {
             parsed: dotenvResult.parsed,
             required: required
         };
+        if (dotenvResult.error) {
+            result.error = dotenvResult.error;
+        }
+        return result;
     },
     parse: dotenv.parse
 };

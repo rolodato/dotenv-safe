@@ -50,16 +50,19 @@ require('dotenv-safe').load();
 ```
 
 This will load environment variables from `.env` as usual, but will also read any variables defined in `.env.example`.
+If any variables are already defined in the environment before reading from `.env`, they will not be overwritten.
 If any variables are missing from the environment, a [`MissingEnvVarsError`](MissingEnvVarsError.js) will be thrown, which lists the missing variables.
 Otherwise, returns an object with the following format:
 
 ```js
 {
   parsed: { SECRET: 'topsecret', TOKEN: '' },          // parsed representation of .env
-  required: { SECRET: 'topsecret', TOKEN: 'external' } // key/value pairs defined in .env.example
-                                                       // and fulfilled from environment
+  required: { SECRET: 'topsecret', TOKEN: 'external' } // key/value pairs required by .env.example
+                                                       // and defined by environment
 }
 ```
+
+If all the required variables were successfully read but an error was thrown when trying to read the `.env` file, the error will be included in the result object under the `error` key.
 
 `dotenv-safe` compares the actual environment after loading `.env` (if any) with the example file, so it will work correctly if environment variables are missing in `.env` but provided through other means such as a shell script.
 
