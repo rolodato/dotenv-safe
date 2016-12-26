@@ -88,11 +88,39 @@ describe('dotenv-safe', function () {
         );
     });
 
+    it('returns an object with parsed .env', function () {
+        var result = dotenv.load({
+            sample: 'envs/.env.allowEmpty',
+            path: 'envs/.env',
+            allowEmptyValues: true
+        });
+        assert.deepEqual(
+            {
+                parsed: { HELLO: 'world', EMPTY: '' },
+                required: { EMPTY: '' },
+            },
+            result
+        );
+    });
+
+    it('returns an object with values from process.env in case when .env does not exist', function () {
+        var result = dotenv.load({
+            sample: 'envs/.env.noDotEnv'
+        });
+        assert.deepEqual({}, result.parsed);
+        assert.deepEqual({ HELLO: 'fromTheOtherSide' }, result.required);
+        assert.equal('ENOENT', result.error.code);
+    });
+
     it('does not overwrite externally set environment variables', function () {
-        dotenv.load({
+        var result = dotenv.load({
             sample: 'envs/.env.success',
             path: 'envs/.env'
         });
         assert.equal(process.env.HELLO, 'fromTheOtherSide');
+        assert.deepEqual({
+            parsed: { HELLO: 'world', EMPTY: '' },
+            required: { HELLO: 'fromTheOtherSide' }
+        }, result);
     });
 });
