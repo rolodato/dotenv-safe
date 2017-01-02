@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.1] - 2017-01-03
+### Changed
+- Move missed MissingEnvVarsError function to index file
+- Fix inconsistent tests
+- Add eslint for code style checks
+
 ## [4.0.0] - 2017-01-02
 ### Changed
 - `load` method returns a [result object](README.markdown#usage) instead of `true`
