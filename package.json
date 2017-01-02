@@ -2,23 +2,23 @@
   "name": "dotenv-safe",
   "version": "4.0.0",
   "description": "Load environment variables from .env and ensure they are defined",
-  "main": "index.js",
-  "scripts": {
-    "test": "cd test && HELLO=fromTheOtherSide mocha -CR spec index.js"
-  },
   "keywords": [
     "dotenv"
   ],
+  "license": "MIT",
+  "author": "Rodrigo López Dato <rlopezdato@gmail.com>",
   "files": [
     "index.js",
     "config.js"
   ],
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/rolodato/dotenv-safe.git"
   },
-  "author": "Rodrigo López Dato <rlopezdato@gmail.com>",
-  "license": "MIT",
+  "scripts": {
+    "test": "mocha"
+  },
   "dependencies": {
     "dotenv": "github:motdotla/dotenv#fdd0923e82e12a6e29b65898990201857141e75d"
   },

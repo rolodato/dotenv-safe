@@ -7,9 +7,12 @@ var clone = require('lodash.clonedeep');
 
 describe('dotenv-safe', function () {
     var originalEnvironment;
+    var originalCWD;
 
     before(function (done) {
-        assert.equal(process.env.HELLO, 'fromTheOtherSide');
+        originalCWD = process.cwd();
+        process.chdir('./test');
+        process.env.HELLO = 'fromTheOtherSide';
         originalEnvironment = clone(process.env);
         fs.mkdirs('envs', done);
     });
@@ -25,6 +28,7 @@ describe('dotenv-safe', function () {
 
     after(function (done) {
         fs.remove('envs', done);
+        originalCWD = process.cwd(originalCWD);
     });
 
     it('does not throw error when all is well', function () {
