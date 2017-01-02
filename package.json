@@ -17,6 +17,7 @@
     "url": "git://github.com/rolodato/dotenv-safe.git"
   },
   "scripts": {
+    "pretest": "eslint index.js config.js test/.",
     "test": "mocha"
   },
   "dependencies": {
@@ -24,6 +25,8 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "eslint": "^3.12.2",
+    "eslint-config-google": "^0.7.1",
     "fs-extra": "^1.0.0",
     "lodash.clonedeep": "^4.5.0",
     "mocha": "^2.4.5"
