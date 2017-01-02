@@ -11,7 +11,8 @@
   ],
   "files": [
     "index.js",
-    "config.js"
+    "config.js",
+    "MissingEnvVarsError.js"
   ],
   "repository": {
     "type": "git",
