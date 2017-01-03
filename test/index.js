@@ -7,8 +7,11 @@ var clone = require('lodash.clonedeep');
 
 describe('dotenv-safe', function () {
     var originalEnvironment;
+    var originalCWD;
 
     before(function (done) {
+        originalCWD = process.cwd();
+        process.chdir('./test');
         assert.equal(process.env.HELLO, 'fromTheOtherSide');
         originalEnvironment = clone(process.env);
         fs.mkdirs('envs', done);
@@ -25,6 +28,7 @@ describe('dotenv-safe', function () {
 
     after(function (done) {
         fs.remove('envs', done);
+        originalCWD = process.cwd(originalCWD);
     });
 
     it('does not throw error when all is well', function () {
@@ -97,7 +101,7 @@ describe('dotenv-safe', function () {
         assert.deepEqual(
             {
                 parsed: { HELLO: 'world', EMPTY: '' },
-                required: { EMPTY: '' },
+                required: { EMPTY: '' }
             },
             result
         );
