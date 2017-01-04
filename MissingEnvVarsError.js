@@ -4,7 +4,6 @@ var util = require('util');
 
 function MissingEnvVarsError (allowEmptyValues, dotenvFilename, sampleFilename, missingVars, error) {
     Error.call(this);
-    Error.captureStackTrace(this, this.constructor);
     this.name = this.constructor.name;
     this.missing = missingVars;
     this.sample = sampleFilename;
@@ -21,6 +20,7 @@ function MissingEnvVarsError (allowEmptyValues, dotenvFilename, sampleFilename, 
         var errorMessage = 'Also, the following error was thrown when trying to read variables from ' + dotenvFilename + ': ' + error.message;
         this.message += '\n' + errorMessage;
     }
+    Error.captureStackTrace(this, this.constructor);
 }
 
 util.inherits(MissingEnvVarsError, Error);

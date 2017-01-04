@@ -127,4 +127,13 @@ describe('dotenv-safe', function () {
             required: { HELLO: 'fromTheOtherSide' }
         }, result);
     });
+
+    it('has stack traces that list which variables are missing', function () {
+        try {
+            throw new MissingEnvVarsError(false, '.env', '.env.example', ['FOO', 'BAR'], null);
+        } catch (e) {
+            assert.include(e.stack, 'FOO');
+            assert.include(e.stack, 'BAR');
+        }
+    });
 });
