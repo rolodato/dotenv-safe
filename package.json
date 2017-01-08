@@ -6,7 +6,7 @@
     "dotenv"
   ],
   "license": "MIT",
-  "author": "Rodrigo López Dato <rlopezdato@gmail.com>",
+  "author": "Rodrigo López Dato <rolodato@rolodato.com>",
   "files": [
     "index.js",
     "config.js",
@@ -18,11 +18,11 @@
     "url": "git://github.com/rolodato/dotenv-safe.git"
   },
   "scripts": {
-    "pretest": "eslint index.js config.js MissingEnvVarsError.js test/.",
+    "pretest": "./node_modules/eslint/bin/eslint.js index.js config.js MissingEnvVarsError.js test/.",
     "test": "HELLO=fromTheOtherSide mocha"
   },
   "dependencies": {
-    "dotenv": "github:motdotla/dotenv#fdd0923e82e12a6e29b65898990201857141e75d"
+    "dotenv": "^4.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
