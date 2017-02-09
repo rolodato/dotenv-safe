@@ -27,6 +27,7 @@ TOKEN=
 ```
 
 ```js
+// index.js
 require('dotenv-safe').load();
 ```
 
@@ -41,6 +42,13 @@ If you expect any of these missing variables to be empty, you can use the allowE
 require('dotenv-safe').load({
   allowEmptyValues: true
 });
+```
+
+Not all the variables have to be defined in `.env`, they can be supplied externally.
+For example, the following would work:
+
+```
+$ TOKEN=abc KEY=xyz node index.js
 ```
 
 # Usage
