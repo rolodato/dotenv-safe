@@ -14,7 +14,7 @@ npm install --save dotenv-safe
 # Example
 
 ```dosini
-# .env.example, commited to repo
+# .env.example, committed to repo
 SECRET=
 TOKEN=
 KEY=
