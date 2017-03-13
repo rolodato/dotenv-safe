@@ -7,7 +7,7 @@ function MissingEnvVarsError (allowEmptyValues, dotenvFilename, sampleFilename, 
     this.name = this.constructor.name;
     this.missing = missingVars;
     this.sample = sampleFilename;
-    this.message = 'The folowing variables are defined in ' + sampleFilename + ' but are not defined in the environment: ' + missingVars.join(', ') + '.\n' +
+    this.message = 'The following variables are defined in ' + sampleFilename + ' but are not defined in the environment: ' + missingVars.join(', ') + '.\n' +
         'Make sure to add them to ' + dotenvFilename + ' or directly to the environment.';
     if (!allowEmptyValues) {
         var emptyValuesMessage = 'If you expect any of these missing variables to be empty, you can use the allowEmptyValues option: \n\n' +
