@@ -35,7 +35,7 @@ Since the provided `.env` file does not contain all the variables defined in
 `.env.example`, an exception is thrown:
 
 ```
-MissingEnvVarsError: The folowing variables are defined in .env.example but are not defined in the environment: TOKEN, KEY.
+MissingEnvVarsError: The following variables are defined in .env.example but are not defined in the environment: TOKEN, KEY.
 Make sure to add them to .env or directly to the environment.
 If you expect any of these missing variables to be empty, you can use the allowEmptyValues option:
 
