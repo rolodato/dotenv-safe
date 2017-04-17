@@ -11,6 +11,10 @@ These needed variables are read from `.env.example`, which should be commited al
 npm install --save dotenv-safe
 ```
 
+```
+yarn add --dev dotenv-safe
+```
+
 # Example
 
 ```dosini
