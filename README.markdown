@@ -12,7 +12,7 @@ npm install --save dotenv-safe
 ```
 
 ```
-yarn add --dev dotenv-safe
+yarn add dotenv-safe
 ```
 
 # Example
