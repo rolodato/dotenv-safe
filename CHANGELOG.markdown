@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.4] - 2017-04-28
+### Fixed
+- Fix installation instructions for yarn. Released only to update README on npmjs.com.
+
 ## [4.0.3] - 2017-01-08
 ### Changed
 - Bump `dotenv` dependency
