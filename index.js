@@ -27,7 +27,7 @@ module.exports = {
         if (dotenvResult.error) {
             dotenvResult.parsed = {};
         }
-        var sample = options.sample || '.env.example';
+        var sample = options.sample || options.path + '.example' || '.env.example';
         var sampleVars = dotenv.parse(fs.readFileSync(sample));
         var allowEmptyValues = options.allowEmptyValues || false;
         var processEnv = allowEmptyValues ? process.env : compact(process.env);
