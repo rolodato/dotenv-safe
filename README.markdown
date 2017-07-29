@@ -101,6 +101,13 @@ Defaults to `false`.
 Path to example environment file.
 Defaults to `.env.example`.
 
+# Ports
+
+The following are ports for other languages
+
+* PHP - https://github.com/morrislaptop/phpdotenv-safe
+* Ruby - https://github.com/wework/dotenv-rails-safe
+
 # Motivation
 
 I regularly use apps that depend on `.env` files but don't validate if all the necessary variables have been defined correctly.
