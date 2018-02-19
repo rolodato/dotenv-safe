@@ -1,15 +1,17 @@
-var chai = require('chai');
-var assert = chai.assert;
-var dotenv = require('../index.js');
-var MissingEnvVarsError = dotenv.MissingEnvVarsError;
-var fs = require('fs-extra');
-var clone = require('lodash.clonedeep');
+'use strict';
 
-describe('dotenv-safe', function () {
-    var originalEnvironment;
-    var originalCWD;
+const chai = require('chai');
+const assert = chai.assert;
+const dotenv = require('../index.js');
+const MissingEnvVarsError = dotenv.MissingEnvVarsError;
+const fs = require('fs-extra');
+const clone = require('lodash.clonedeep');
 
-    before(function (done) {
+describe('dotenv-safe', () => {
+    let originalEnvironment;
+    let originalCWD;
+
+    before(done => {
         originalCWD = process.cwd();
         process.chdir('./test');
         assert.equal(process.env.HELLO, 'fromTheOtherSide');
@@ -17,108 +19,96 @@ describe('dotenv-safe', function () {
         fs.mkdirs('envs', done);
     });
 
-    beforeEach(function (done) {
+    beforeEach(done => {
         process.env = clone(originalEnvironment);
         fs.copy('original', 'envs', done);
     });
 
-    afterEach(function (done) {
+    afterEach(done => {
         fs.emptyDir('envs', done);
     });
 
-    after(function (done) {
+    after(done => {
         fs.remove('envs', done);
         originalCWD = process.cwd(originalCWD);
     });
 
-    it('does not throw error when all is well', function () {
+    it('does not throw error when all is well', () => {
         assert.isOk(dotenv.load({
-            sample: 'envs/.env.success',
+            example: 'envs/.env.success',
             path: 'envs/.env'
         }));
     });
 
-    it('does not throw error when variable exists but is empty and allowEmptyValues option is true', function () {
+    it('does not throw error when variable exists but is empty and allowEmptyValues option is true', () => {
         assert.isOk(dotenv.load({
-            sample: 'envs/.env.allowEmpty',
+            example: 'envs/.env.allowEmpty',
             path: 'envs/.env',
             allowEmptyValues: true
         }));
     });
 
-    it('does not throw error when .env is missing but variables exist', function () {
+    it('does not throw error when .env is missing but variables exist', () => {
         process.env.HELLO = 'WORLD';
 
         assert.isOk(dotenv.load({
-            sample: 'envs/.env.noDotEnv'
+            example: 'envs/.env.noDotEnv'
         }));
     });
 
-    it('throws error when a variable is missing', function () {
-        assert.throws(
-            function () {
-                dotenv.load({
-                    sample: 'envs/.env.fail',
-                    path: 'envs/.env'
-                });
-            },
-            MissingEnvVarsError
-        );
+    it('throws error when a variable is missing', () => {
+        assert.throws(() => {
+            dotenv.load({
+                example: 'envs/.env.fail',
+                path: 'envs/.env'
+            });
+        }, MissingEnvVarsError);
     });
 
-    it('throws error when a variable exists but is empty and allowEmptyValues option is false', function () {
-        assert.throws(
-            function () {
-                dotenv.load({
-                    sample: 'envs/.env.allowEmpty',
-                    path: 'envs/.env',
-                    allowEmptyValues: false
-                });
-            },
-            MissingEnvVarsError
-        );
+    it('throws error when a variable exists but is empty and allowEmptyValues option is false', () => {
+        assert.throws(() => {
+            dotenv.load({
+                example: 'envs/.env.allowEmpty',
+                path: 'envs/.env',
+                allowEmptyValues: false
+            });
+        }, MissingEnvVarsError);
     });
 
-    it('throws error when a variable does not exist and allowEmptyValues option is true', function () {
-        assert.throws(
-            function () {
-                dotenv.load({
-                    sample: 'envs/.env.fail',
-                    path: 'envs/.env',
-                    allowEmptyValues: true
-                });
-            },
-            MissingEnvVarsError
-        );
+    it('throws error when a variable does not exist and allowEmptyValues option is true', () => {
+        assert.throws(() => {
+            dotenv.load({
+                example: 'envs/.env.fail',
+                path: 'envs/.env',
+                allowEmptyValues: true
+            });
+        }, MissingEnvVarsError);
     });
 
-    it('returns an object with parsed .env', function () {
-        var result = dotenv.load({
-            sample: 'envs/.env.allowEmpty',
+    it('returns an object with parsed .env', () => {
+        const result = dotenv.load({
+            example: 'envs/.env.allowEmpty',
             path: 'envs/.env',
             allowEmptyValues: true
         });
-        assert.deepEqual(
-            {
-                parsed: { HELLO: 'world', EMPTY: '' },
-                required: { EMPTY: '' }
-            },
-            result
-        );
+        assert.deepEqual({
+            parsed: { HELLO: 'world', EMPTY: '' },
+            required: { EMPTY: '' }
+        }, result);
     });
 
-    it('returns an object with values from process.env in case when .env does not exist', function () {
-        var result = dotenv.load({
-            sample: 'envs/.env.noDotEnv'
+    it('returns an object with values from process.env in case when .env does not exist', () => {
+        const result = dotenv.load({
+            example: 'envs/.env.noDotEnv'
         });
         assert.deepEqual({}, result.parsed);
         assert.deepEqual({ HELLO: 'fromTheOtherSide' }, result.required);
         assert.equal('ENOENT', result.error.code);
     });
 
-    it('does not overwrite externally set environment variables', function () {
-        var result = dotenv.load({
-            sample: 'envs/.env.success',
+    it('does not overwrite externally set environment variables', () => {
+        const result = dotenv.load({
+            example: 'envs/.env.success',
             path: 'envs/.env'
         });
         assert.equal(process.env.HELLO, 'fromTheOtherSide');
@@ -128,7 +118,7 @@ describe('dotenv-safe', function () {
         }, result);
     });
 
-    it('has stack traces that list which variables are missing', function () {
+    it('has stack traces that list which variables are missing', () => {
         try {
             throw new MissingEnvVarsError(false, '.env', '.env.example', ['FOO', 'BAR'], null);
         } catch (e) {

@@ -9,5 +9,8 @@ module.exports = {
     "semi": "error",
     "indent": ["error", 4],
     "comma-dangle": ["error", "never"]
+  },
+  "parserOptions": {
+    "ecmaVersion": 6
   }
 };

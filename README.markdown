@@ -32,17 +32,18 @@ TOKEN=
 
 ```js
 // index.js
-require('dotenv-safe').load();
+require('dotenv-safe').config();
 ```
 
 Since the provided `.env` file does not contain all the variables defined in
 `.env.example`, an exception is thrown:
 
 ```
-MissingEnvVarsError: The following variables are defined in .env.example but are not defined in the environment: TOKEN, KEY.
+MissingEnvVarsError: The following variables were defined in .env.example but are not present in the environment:
+  TOKEN, KEY
 Make sure to add them to .env or directly to the environment.
-If you expect any of these missing variables to be empty, you can use the allowEmptyValues option:
 
+If you expect any of these variables to be empty, you can use the allowEmptyValues option:
 require('dotenv-safe').load({
   allowEmptyValues: true
 });
@@ -60,7 +61,7 @@ $ TOKEN=abc KEY=xyz node index.js
 Requiring and loading is identical:
 
 ```js
-require('dotenv-safe').load();
+require('dotenv-safe').config();
 ```
 
 This will load environment variables from `.env` as usual, but will also read any variables defined in `.env.example`.
@@ -85,9 +86,9 @@ If all the required variables were successfully read but an error was thrown whe
 [Same options and methods supported by `dotenv`](https://github.com/motdotla/dotenv#options).
 
 ```js
-require('dotenv-safe').load({
+require('dotenv-safe').config({
     allowEmptyValues: true,
-    sample: './.my-env-sample-filename'
+    example: './.my-env-example-filename'
 });
 ```
 
@@ -96,7 +97,7 @@ require('dotenv-safe').load({
 If a variable is defined in the example file and has an empty value in the environment, enabling this option will not throw an error after loading.
 Defaults to `false`.
 
-## `sample`
+## `example`
 
 Path to example environment file.
 Defaults to `.env.example`.

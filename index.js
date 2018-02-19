@@ -1,18 +1,16 @@
 'use strict';
 
-var dotenv = require('dotenv');
-var fs = require('fs');
-var MissingEnvVarsError = require('./MissingEnvVarsError.js');
+const dotenv = require('dotenv');
+const fs = require('fs');
+const MissingEnvVarsError = require('./MissingEnvVarsError.js');
 
 function difference (arrA, arrB) {
-    return arrA.filter(function (a) {
-        return arrB.indexOf(a) < 0;
-    });
+    return arrA.filter(a => arrB.indexOf(a) < 0);
 }
 
 function compact (obj) {
-    var result = {};
-    Object.keys(obj).forEach(function (key) {
+    const result = {};
+    Object.keys(obj).forEach(key => {
         if (obj[key]) {
             result[key] = obj[key];
         }
@@ -21,37 +19,32 @@ function compact (obj) {
 }
 
 module.exports = {
-    config: function (options) {
-        options = options || {};
-        var dotenvResult = dotenv.load(options);
-        if (dotenvResult.error) {
-            dotenvResult.parsed = {};
-        }
-        var sample = options.sample || '.env.example';
-        var sampleVars = dotenv.parse(fs.readFileSync(sample));
-        var allowEmptyValues = options.allowEmptyValues || false;
-        var processEnv = allowEmptyValues ? process.env : compact(process.env);
-        var missing = difference(Object.keys(sampleVars), Object.keys(processEnv));
+    config: function(options = {}) {
+        const dotenvResult = dotenv.load(options);
+        const example = options.example || options.sample || '.env.example';
+        const allowEmptyValues = options.allowEmptyValues || false;
+        const processEnv = allowEmptyValues ? process.env : compact(process.env);
+        const exampleVars = dotenv.parse(fs.readFileSync(example));
+        const missing = difference(Object.keys(exampleVars), Object.keys(processEnv));
 
         if (missing.length > 0) {
-            throw new MissingEnvVarsError(allowEmptyValues, options.path || '.env', sample, missing, dotenvResult.error);
+            throw new MissingEnvVarsError(allowEmptyValues, options.path || '.env', example, missing, dotenvResult.error);
         }
 
         // Key/value pairs defined in example file and resolved from environment
-        var required = Object.keys(sampleVars).reduce(function (acc, key) {
+        const required = Object.keys(exampleVars).reduce((acc, key) => {
             acc[key] = process.env[key];
             return acc;
         }, {});
-        var result = {
-            parsed: dotenvResult.parsed,
+        const error = dotenvResult.error ? { error: dotenvResult.error } : {};
+        const result = {
+            parsed: dotenvResult.error ? {} : dotenvResult.parsed,
             required: required
         };
-        if (dotenvResult.error) {
-            result.error = dotenvResult.error;
-        }
-        return result;
+        return Object.assign(result, error);
     },
-    parse: dotenv.parse
+    parse: dotenv.parse,
+    MissingEnvVarsError: MissingEnvVarsError
 };
 
 module.exports.load = module.exports.config;
