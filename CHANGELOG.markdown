@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [5.0.0] - 2018-02-19
 ### Added
 - `example` option as an alias of `sample`
-- Testing against Node v4, v8 and v9
+- Testing against Node v8 and v9
 
 ### Changed
 - *Breaking*: Updated to dotenv 5.0.0. See [dotenv's CHANGELOG](https://github.com/motdotla/dotenv/blob/master/CHANGELOG.md#500---2018-01-29) for more details
