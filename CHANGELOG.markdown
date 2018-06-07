@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.0.0] - 2018-06-07
+### Changed
+- Upgraded `dotenv` dependency to version 6.0.0
+
 ## [5.0.1] - 2018-02-20
 ### Fixed
 - Restored config.js file for preloading
