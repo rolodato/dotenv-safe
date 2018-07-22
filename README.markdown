@@ -81,6 +81,18 @@ If all the required variables were successfully read but an error was thrown whe
 
 `dotenv-safe` compares the actual environment after loading `.env` (if any) with the example file, so it will work correctly if environment variables are missing in `.env` but provided through other means such as a shell script.
 
+## Continuous integration (CI)
+
+It can be useful to depend on a different set of example variables when running in a CI environment.
+This can be done by checking if the `CI` environment variable is defined, which is supported by virtually all CI solutions.
+For example:
+
+```js
+require('dotenv-safe').config({
+  example: process.env.CI ? '.env.ci.example' : '.env.example'
+});
+```
+
 # Options
 
 [Same options and methods supported by `dotenv`](https://github.com/motdotla/dotenv#options).
