@@ -126,4 +126,12 @@ describe('dotenv-safe', () => {
             assert.include(e.stack, 'BAR');
         }
     });
+
+    it('does not throw error when missing variable is ignored', () => {
+        assert.isOk(dotenv.load({
+            ignore: ['EVIL'],
+            example: 'envs/.env.fail',
+            path: 'envs/.env'
+        }));
+    });
 });

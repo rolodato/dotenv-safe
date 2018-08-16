@@ -4,8 +4,8 @@ const dotenv = require('dotenv');
 const fs = require('fs');
 const MissingEnvVarsError = require('./MissingEnvVarsError.js');
 
-function difference (arrA, arrB) {
-    return arrA.filter(a => arrB.indexOf(a) < 0);
+function difference (arrA, arrB, arrIgnored) {
+    return arrA.filter(a => arrB.indexOf(a) < 0 && arrIgnored.indexOf(a) < 0);
 }
 
 function compact (obj) {
@@ -25,7 +25,8 @@ module.exports = {
         const allowEmptyValues = options.allowEmptyValues || false;
         const processEnv = allowEmptyValues ? process.env : compact(process.env);
         const exampleVars = dotenv.parse(fs.readFileSync(example));
-        const missing = difference(Object.keys(exampleVars), Object.keys(processEnv));
+        const ignore = options.ignore || [];
+        const missing = difference(Object.keys(exampleVars), Object.keys(processEnv), ignore);
 
         if (missing.length > 0) {
             throw new MissingEnvVarsError(allowEmptyValues, options.path || '.env', example, missing, dotenvResult.error);
