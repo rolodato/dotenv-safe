@@ -22,7 +22,7 @@
     "test": "HELLO=fromTheOtherSide mocha"
   },
   "dependencies": {
-    "dotenv": "^6.0.0"
+    "dotenv": "^6.1.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
