@@ -9,8 +9,7 @@ Make sure to add them to ${dotenvFilename} or directly to the environment.`;
 require('dotenv-safe').config({
   allowEmptyValues: true
 });` : '';
-    const envErrorMessage = error ? `Also, the following error was thrown when trying to read variables from  ${dotenvFilename}:\n${error.message}`
-                                  : '';
+    const envErrorMessage = error ? `Also, the following error was thrown when trying to read variables from  ${dotenvFilename}:\n${error.message}` : '';
     Error.call(this);
     this.name = this.constructor.name;
     this.missing = missingVars;
