@@ -72,8 +72,8 @@ Otherwise, returns an object with the following format:
 ```js
 {
   parsed: { SECRET: 'topsecret', TOKEN: '' },          // parsed representation of .env
-  required: { SECRET: 'topsecret', TOKEN: 'external' } // key/value pairs required by .env.example
-                                                       // and defined by environment
+  required: { SECRET: 'topsecret', TOKEN: 'external' } /* key-value pairs required by .env.example
+                                                          and defined by environment */
 }
 ```
 
