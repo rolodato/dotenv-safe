@@ -56,6 +56,14 @@ describe('dotenv-safe', () => {
         }));
     });
 
+    it('does not throw error when a variable does not exist and allowEmptyValues option allows it', () => {
+        assert.isOk(dotenv.load({
+            example: 'envs/.env.allowEmpty',
+            path: 'envs/.env',
+            allowEmptyValues: ['EMPTY']
+        }));
+    });
+
     it('throws error when a variable is missing', () => {
         assert.throws(() => {
             dotenv.load({
@@ -81,6 +89,16 @@ describe('dotenv-safe', () => {
                 example: 'envs/.env.fail',
                 path: 'envs/.env',
                 allowEmptyValues: true
+            });
+        }, MissingEnvVarsError);
+    });
+
+    it('throws error when a variable does not exist and allowEmptyValues option does not allows it', () => {
+        assert.throws(() => {
+            dotenv.load({
+                example: 'envs/.env.allowEmpty',
+                path: 'envs/.env',
+                allowEmptyValues: []
             });
         }, MissingEnvVarsError);
     });

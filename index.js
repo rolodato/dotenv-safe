@@ -8,10 +8,17 @@ function difference (arrA, arrB) {
     return arrA.filter(a => arrB.indexOf(a) < 0);
 }
 
-function compact (obj) {
+function maybeRemoveEmptyValues (obj, allowEmptyValues) {
+    function allowIfEmpty (key) {
+        return (
+            allowEmptyValues === true ||
+            (Array.isArray(allowEmptyValues) && allowEmptyValues.includes(key))
+        );
+    }
+
     const result = {};
     Object.keys(obj).forEach(key => {
-        if (obj[key]) {
+        if (obj[key] || allowIfEmpty(key)) {
             result[key] = obj[key];
         }
     });
@@ -23,7 +30,7 @@ module.exports = {
         const dotenvResult = dotenv.load(options);
         const example = options.example || options.sample || '.env.example';
         const allowEmptyValues = options.allowEmptyValues || false;
-        const processEnv = allowEmptyValues ? process.env : compact(process.env);
+        const processEnv = maybeRemoveEmptyValues(process.env, allowEmptyValues);
         const exampleVars = dotenv.parse(fs.readFileSync(example));
         const missing = difference(Object.keys(exampleVars), Object.keys(processEnv));
 
