@@ -20,7 +20,7 @@ function compact (obj) {
 
 module.exports = {
     config: function(options = {}) {
-        const dotenvResult = dotenv.load(options);
+        const dotenvResult = dotenv.config(options);
         const example = options.example || options.sample || '.env.example';
         const allowEmptyValues = options.allowEmptyValues || false;
         const processEnv = allowEmptyValues ? process.env : compact(process.env);
@@ -47,5 +47,4 @@ module.exports = {
     MissingEnvVarsError: MissingEnvVarsError
 };
 
-module.exports.load = module.exports.config;
 module.exports.MissingEnvVarsError = MissingEnvVarsError;

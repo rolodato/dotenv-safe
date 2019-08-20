@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [8.1.0] - 2019-08-20
+### Changed
+- Upgraded `dotenv` dependency to version 8.1.0. See [dotenv's CHANGELOG](https://github.com/motdotla/dotenv/blob/master/CHANGELOG.md#810-2019-08-18) for more details
+
 ## [6.1.0] - 2018-10-09
 ### Changed
 - Upgraded `dotenv` dependency to version 6.1.0. See [dotenv's CHANGELOG](https://github.com/motdotla/dotenv/blob/master/CHANGELOG.md#610---2018-10-08) for more details
