@@ -81,6 +81,18 @@ If all the required variables were successfully read but an error was thrown whe
 
 `dotenv-safe` compares the actual environment after loading `.env` (if any) with the example file, so it will work correctly if environment variables are missing in `.env` but provided through other means such as a shell script.
 
+## Preloading
+
+You can use the `--require` (`-r`) command line option to preload dotenv-safe.
+By doing this, you do not need to require and load dotenv in your application code.
+This is the preferred approach when using import instead of require.
+
+```
+$ node -r dotenv-safe/config your_script.js
+```
+
+[See the dotenv README for more information]((https://github.com/motdotla/dotenv#preload)).
+
 ## Continuous integration (CI)
 
 It can be useful to depend on a different set of example variables when running in a CI environment.
