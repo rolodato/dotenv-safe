@@ -1,6 +1,6 @@
 {
   "name": "dotenv-safe",
-  "version": "8.2.0",
+  "version": "8.2.1",
   "description": "Load environment variables from .env and ensure they are defined",
   "keywords": [
     "dotenv"
