@@ -1,9 +1,8 @@
-# dotenv-safe
+# dotenv-safe [![Build Status](https://travis-ci.org/rolodato/dotenv-safe.svg)](https://travis-ci.org/rolodato/dotenv-safe)
 
 Identical to [`dotenv`](https://github.com/motdotla/dotenv), but ensures that all necessary environment variables are defined after reading from `.env`.
 These needed variables are read from `.env.example`, which should be commited along with your project.
 
-[![Build Status](https://travis-ci.org/rolodato/dotenv-safe.svg)](https://travis-ci.org/rolodato/dotenv-safe)
 
 # Installation
 
