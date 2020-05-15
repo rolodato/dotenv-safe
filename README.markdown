@@ -1,8 +1,9 @@
 # dotenv-safe [![Build Status](https://travis-ci.org/rolodato/dotenv-safe.svg)](https://travis-ci.org/rolodato/dotenv-safe)
 
-Identical to [`dotenv`](https://github.com/motdotla/dotenv), but ensures that all necessary environment variables are defined after reading from `.env`.
-These needed variables are read from `.env.example`, which should be commited along with your project.
+Identical to [`dotenv`](https://github.com/motdotla/dotenv), but ensures that all needed environment variables are defined after reading from `.env`.
+The names of the needed variables are read from `.env.example`, which should be commited along with your project.
 
+`dotenv-safe` only checks if all the needed variable names exist in `process.env` after initialising. It does not assume anything about the presence, format or validity of the values.
 
 # Installation
 
@@ -48,7 +49,7 @@ require('dotenv-safe').config({
 });
 ```
 
-Not all the variables have to be defined in `.env`, they can be supplied externally.
+Not all the variables have to be defined in `.env`; they can be supplied externally.
 For example, the following would work:
 
 ```
@@ -128,4 +129,4 @@ Defaults to `.env.example`.
 # Motivation
 
 I regularly use apps that depend on `.env` files but don't validate if all the necessary variables have been defined correctly.
-Instead of having to document and validate this manually, I prefer to commit a self-documenting `.env` file (no values, key names only) which can be used as a reference.
+Instead of having to document and validate this manually, I prefer to commit a self-documenting `.env.example` file that may have placeholder or example values filled in. This can be used as a template or starting point for an actual `.env` file.
