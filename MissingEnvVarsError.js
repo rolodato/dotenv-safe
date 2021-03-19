@@ -7,7 +7,12 @@ function MissingEnvVarsError (allowEmptyValues, dotenvFilename, exampleFilename,
 Make sure to add them to ${dotenvFilename} or directly to the environment.`;
     const allowEmptyValuesMessage = !allowEmptyValues ? `If you expect any of these variables to be empty, you can use the allowEmptyValues option:
 require('dotenv-safe').config({
-  allowEmptyValues: true
+    allowEmptyValues: true
+});
+
+Or the optionalValues option:
+require('dotenv-safe').config({
+    optionalValues: new Set(['THIS_ENV_IS_OPTIONAL', 'THIS_ONE_TOO'])
 });` : '';
     const envErrorMessage = error ? `Also, the following error was thrown when trying to read variables from  ${dotenvFilename}:\n${error.message}` : '';
     Error.call(this);
