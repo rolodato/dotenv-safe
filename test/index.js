@@ -48,6 +48,14 @@ describe('dotenv-safe', () => {
         }));
     });
 
+    it('does not throw error when a variable exists but is empty and optionalValues option allows it', () => {
+        assert.isOk(dotenv.config({
+            example: 'envs/.env.allowEmpty',
+            path: 'envs/.env',
+            optionalValues: new Set(['EMPTY'])
+        }));
+    });
+
     it('does not throw error when .env is missing but variables exist', () => {
         process.env.HELLO = 'WORLD';
 
@@ -56,29 +64,11 @@ describe('dotenv-safe', () => {
         }));
     });
 
-    it('does not throw error when a variable does not exist and allowEmptyValues option allows it', () => {
-        assert.isOk(dotenv.load({
-            example: 'envs/.env.allowEmpty',
-            path: 'envs/.env',
-            allowEmptyValues: ['EMPTY']
-        }));
-    });
-
     it('throws error when a variable is missing', () => {
         assert.throws(() => {
             dotenv.config({
                 example: 'envs/.env.fail',
                 path: 'envs/.env'
-            });
-        }, MissingEnvVarsError);
-    });
-
-    it('throws error when a variable exists but is empty and allowEmptyValues option is false', () => {
-        assert.throws(() => {
-            dotenv.config({
-                example: 'envs/.env.allowEmpty',
-                path: 'envs/.env',
-                allowEmptyValues: false
             });
         }, MissingEnvVarsError);
     });
@@ -93,14 +83,76 @@ describe('dotenv-safe', () => {
         }, MissingEnvVarsError);
     });
 
-    it('throws error when a variable does not exist and allowEmptyValues option does not allows it', () => {
+    it('throws error when a variable exists but is empty and allowEmptyValues option is false', () => {
         assert.throws(() => {
-            dotenv.load({
+            dotenv.config({
                 example: 'envs/.env.allowEmpty',
                 path: 'envs/.env',
-                allowEmptyValues: []
+                allowEmptyValues: false
             });
         }, MissingEnvVarsError);
+    });
+
+    it('throws error when a variable exists but is empty and allowEmptyValues option is true but is required in requiredValues', () => {
+        assert.throws(() => {
+            dotenv.config({
+                example: 'envs/.env.allowEmpty',
+                path: 'envs/.env',
+                allowEmptyValues: true,
+                requiredValues: new Set(['EMPTY'])
+            });
+        }, MissingEnvVarsError);
+    });
+
+    it('throws error when a variable does not exist and optionalValues option does not allows it', () => {
+        assert.throws(() => {
+            dotenv.config({
+                example: 'envs/.env.allowEmpty',
+                path: 'envs/.env',
+                optionalValues: new Set()
+            });
+        }, MissingEnvVarsError);
+    });
+
+    it('throws error when optionalValues option is not a Set', () => {
+        assert.throws(() => {
+            dotenv.config({
+                example: 'envs/.env.success',
+                path: 'envs/.env',
+                optionalValues: ['HELLO']
+            });
+        }, Error);
+    });
+
+    it('throws error when requiredValues option is not a Set', () => {
+        assert.throws(() => {
+            dotenv.config({
+                example: 'envs/.env.success',
+                path: 'envs/.env',
+                requiredValues: ['HELLO']
+            });
+        }, Error);
+    });
+
+    it('throws error when allowEmptyValues option it false but requiredValues option is not empty (all values are required as default)', () => {
+        assert.throws(() => {
+            dotenv.config({
+                example: 'envs/.env.success',
+                path: 'envs/.env',
+                requiredValues: new Set(['HELLO'])
+            });
+        }, Error);
+    });
+
+    it('throws error when a variable is in optionalValues option and requiredValues option at the same time', () => {
+        assert.throws(() => {
+            dotenv.config({
+                example: 'envs/.env.success',
+                path: 'envs/.env',
+                optionalValues: new Set(['HELLO']),
+                requiredValues: new Set(['HELLO'])
+            });
+        }, Error);
     });
 
     it('returns an object with parsed .env', () => {
