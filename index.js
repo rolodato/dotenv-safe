@@ -4,14 +4,30 @@ const dotenv = require('dotenv');
 const fs = require('fs');
 const MissingEnvVarsError = require('./MissingEnvVarsError.js');
 
+/**
+ * @param {string[]} arrA
+ * @param {string[]} arrB
+ */
 function difference (arrA, arrB) {
     return arrA.filter(a => arrB.indexOf(a) < 0);
 }
 
-function compact (obj) {
+/**
+ * @param {Record<string, string>} obj
+ * @param {{ allowEmptyValues: boolean; optionalValues: Set<string>; requiredValues: Set<string> }} config
+ * @returns {Record<string, string>}
+ */
+function selectValues (obj, config) {
+    function allowIfCanBeEmpty (key) {
+        return (
+            (config.allowEmptyValues === true && !config.requiredValues.has(key))
+            || config.optionalValues.has(key)
+        );
+    }
+
     const result = {};
     Object.keys(obj).forEach(key => {
-        if (obj[key]) {
+        if (obj[key] || allowIfCanBeEmpty(key)) {
             result[key] = obj[key];
         }
     });
@@ -22,8 +38,26 @@ module.exports = {
     config: function(options = {}) {
         const dotenvResult = dotenv.config(options);
         const example = options.example || options.sample || '.env.example';
+
         const allowEmptyValues = options.allowEmptyValues || false;
-        const processEnv = allowEmptyValues ? process.env : compact(process.env);
+        const optionalValues = options.optionalValues || new Set();
+        const requiredValues = options.requiredValues || new Set();
+
+        if (!(requiredValues instanceof Set) || !(optionalValues instanceof Set))
+            throw new Error('Options requiredValues and optionalValues must be a Set.');
+
+        if (!allowEmptyValues && requiredValues.size > 0)
+            throw new Error('Option requiredValues is useless if allowEmptyValues option is false. All values are required by default.');
+
+        if (allowEmptyValues && optionalValues.size > 0)
+            throw new Error('Option optionalValues is useless if allowEmptyValues option is true as allowEmptyValues makes all values optional.');
+
+        const processEnv = selectValues(process.env, {
+            allowEmptyValues,
+            optionalValues,
+            requiredValues
+        });
+
         const exampleVars = dotenv.parse(fs.readFileSync(example));
         const missing = difference(Object.keys(exampleVars), Object.keys(processEnv));
 

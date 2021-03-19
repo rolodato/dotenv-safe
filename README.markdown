@@ -45,7 +45,12 @@ Make sure to add them to .env or directly to the environment.
 
 If you expect any of these variables to be empty, you can use the allowEmptyValues option:
 require('dotenv-safe').config({
-  allowEmptyValues: true
+    allowEmptyValues: true
+});
+
+Or the optionalValues option:
+require('dotenv-safe').config({
+    optionalValues: new Set(['THIS_ENV_IS_OPTIONAL', 'THIS_ONE_TOO'])
 });
 ```
 
@@ -71,8 +76,8 @@ Otherwise, returns an object with the following format:
 
 ```js
 {
-  parsed: { SECRET: 'topsecret', TOKEN: '' },          // parsed representation of .env
-  required: { SECRET: 'topsecret', TOKEN: 'external' } /* key-value pairs required by .env.example
+    parsed: { SECRET: 'topsecret', TOKEN: '' },          // parsed representation of .env
+    required: { SECRET: 'topsecret', TOKEN: 'external' } /* key-value pairs required by .env.example
                                                           and defined by environment */
 }
 ```
@@ -101,7 +106,7 @@ For example:
 
 ```js
 require('dotenv-safe').config({
-  example: process.env.CI ? '.env.ci.example' : '.env.example'
+    example: process.env.CI ? '.env.ci.example' : '.env.example'
 });
 ```
 
@@ -110,8 +115,26 @@ require('dotenv-safe').config({
 [Same options and methods supported by `dotenv`](https://github.com/motdotla/dotenv#options).
 
 ```js
+// Any value can be empty
 require('dotenv-safe').config({
     allowEmptyValues: true,
+    example: './.my-env-example-filename'
+});
+```
+
+```js
+// Any value can be empty except `THIS_ENV_IS_REQUIRED_ANYWAY` and `THIS_ONE_TOO`
+require('dotenv-safe').config({
+    allowEmptyValues: true,
+    requiredValues: new Set(['THIS_ENV_IS_REQUIRED_ANYWAY', 'THIS_ONE_TOO']),
+    example: './.my-env-example-filename'
+});
+```
+
+```js
+// Every values are required except `THIS_ENV_IS_OPTIONAL` and `THIS_ONE_TOO`
+require('dotenv-safe').config({
+    optionalValues: new Set(['THIS_ENV_IS_OPTIONAL', 'THIS_ONE_TOO']),
     example: './.my-env-example-filename'
 });
 ```
@@ -119,11 +142,25 @@ require('dotenv-safe').config({
 ## `allowEmptyValues`
 
 If a variable is defined in the example file and has an empty value in the environment, enabling this option will not throw an error after loading.
+
 Defaults to `false`.
+
+## `optionalValues`
+
+If a variable is defined in the example file and has an empty value in the environment, adding it to this set will not throw an error after loading.
+
+Defaults to `new Set()`.
+
+## `requiredValues`
+
+If [`allowEmptyValues`](#allowEmptyValues) option is `true` but you still require some values to not be empty, adding it to this set will throw an error after loading if the value is empty.
+
+Defaults to `new Set()`.
 
 ## `example`
 
 Path to example environment file.
+
 Defaults to `.env.example`.
 
 # Motivation
