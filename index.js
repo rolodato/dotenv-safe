@@ -13,18 +13,6 @@ function difference (arrA, arrB) {
 }
 
 /**
- * @param {Set<string>} optionalValues
- * @param {Set<string>} requiredValues
- */
-function checkOptionalValuesAreNotRequiredToo (optionalValues, requiredValues) {
-    const commonValues = [];
-    optionalValues.forEach((optional) => requiredValues.has(optional) && commonValues.push(optional));
-    if (commonValues.length > 0)
-        throw new Error(`Values cannot be in optionalValues and requiredValues at the same time.
-Values in both options: ${commonValues.join(', ')}`);
-}
-
-/**
  * @param {Record<string, string>} obj
  * @param {{ allowEmptyValues: boolean; optionalValues: Set<string>; requiredValues: Set<string> }} config
  * @returns {Record<string, string>}
@@ -61,7 +49,8 @@ module.exports = {
         if (!allowEmptyValues && requiredValues.size > 0)
             throw new Error('Option requiredValues is useless if allowEmptyValues option is false. All values are required by default.');
 
-        checkOptionalValuesAreNotRequiredToo(requiredValues, optionalValues);
+        if (allowEmptyValues && optionalValues.size > 0)
+            throw new Error('Option optionalValues is useless if allowEmptyValues option is true as allowEmptyValues makes all values optional.');
 
         const processEnv = selectValues(process.env, {
             allowEmptyValues,

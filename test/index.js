@@ -93,7 +93,7 @@ describe('dotenv-safe', () => {
         }, MissingEnvVarsError);
     });
 
-    it('throws error when a variable exists but is empty and allowEmptyValues option is true but is required in requiredValues', () => {
+    it('throws error when a variable exists but is empty and allowEmptyValues option is true but is in requiredValues', () => {
         assert.throws(() => {
             dotenv.config({
                 example: 'envs/.env.allowEmpty',
@@ -134,23 +134,24 @@ describe('dotenv-safe', () => {
         }, Error);
     });
 
-    it('throws error when allowEmptyValues option it false but requiredValues option is not empty (all values are required as default)', () => {
+    it('throws error when allowEmptyValues option it false and requiredValues option is not empty (all values are required by default)', () => {
         assert.throws(() => {
             dotenv.config({
                 example: 'envs/.env.success',
                 path: 'envs/.env',
+                allowEmptyValues: false,
                 requiredValues: new Set(['HELLO'])
             });
         }, Error);
     });
 
-    it('throws error when a variable is in optionalValues option and requiredValues option at the same time', () => {
+    it('throws error when allowEmptyValues option it true and optionalValues option is not empty (all values are optional when allowEmptyValues is true)', () => {
         assert.throws(() => {
             dotenv.config({
                 example: 'envs/.env.success',
                 path: 'envs/.env',
-                optionalValues: new Set(['HELLO']),
-                requiredValues: new Set(['HELLO'])
+                allowEmptyValues: true,
+                optionalValues: new Set(['HELLO'])
             });
         }, Error);
     });
