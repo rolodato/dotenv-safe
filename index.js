@@ -27,7 +27,7 @@ function maybeRemoveEmptyValues (obj, allowEmptyValues) {
 
 module.exports = {
     config: function(options = {}) {
-        const dotenvResult = dotenv.load(options);
+        const dotenvResult = dotenv.config(options);
         const example = options.example || options.sample || '.env.example';
         const allowEmptyValues = options.allowEmptyValues || false;
         const processEnv = maybeRemoveEmptyValues(process.env, allowEmptyValues);
@@ -54,5 +54,4 @@ module.exports = {
     MissingEnvVarsError: MissingEnvVarsError
 };
 
-module.exports.load = module.exports.config;
 module.exports.MissingEnvVarsError = MissingEnvVarsError;

@@ -1,9 +1,9 @@
-# dotenv-safe
+# dotenv-safe [![Build Status](https://travis-ci.org/rolodato/dotenv-safe.svg)](https://travis-ci.org/rolodato/dotenv-safe)
 
-Identical to [`dotenv`](https://github.com/motdotla/dotenv), but ensures that all necessary environment variables are defined after reading from `.env`.
-These needed variables are read from `.env.example`, which should be commited along with your project.
+Identical to [`dotenv`](https://github.com/motdotla/dotenv), but ensures that all needed environment variables are defined after reading from `.env`.
+The names of the needed variables are read from `.env.example`, which should be commited along with your project.
 
-[![Build Status](https://travis-ci.org/rolodato/dotenv-safe.svg)](https://travis-ci.org/rolodato/dotenv-safe)
+`dotenv-safe` only checks if all the needed variable names exist in `process.env` after initialising. It does not assume anything about the presence, format or validity of the values.
 
 # Installation
 
@@ -49,7 +49,7 @@ require('dotenv-safe').config({
 });
 ```
 
-Not all the variables have to be defined in `.env`, they can be supplied externally.
+Not all the variables have to be defined in `.env`; they can be supplied externally.
 For example, the following would work:
 
 ```
@@ -80,6 +80,18 @@ Otherwise, returns an object with the following format:
 If all the required variables were successfully read but an error was thrown when trying to read the `.env` file, the error will be included in the result object under the `error` key.
 
 `dotenv-safe` compares the actual environment after loading `.env` (if any) with the example file, so it will work correctly if environment variables are missing in `.env` but provided through other means such as a shell script.
+
+## Preloading
+
+You can use the `--require` (`-r`) command line option to preload dotenv-safe.
+By doing this, you do not need to require and load dotenv in your application code.
+This is the preferred approach when using import instead of require.
+
+```
+$ node -r dotenv-safe/config your_script.js
+```
+
+[See the dotenv README for more information]((https://github.com/motdotla/dotenv#preload)).
 
 ## Continuous integration (CI)
 
@@ -117,4 +129,4 @@ Defaults to `.env.example`.
 # Motivation
 
 I regularly use apps that depend on `.env` files but don't validate if all the necessary variables have been defined correctly.
-Instead of having to document and validate this manually, I prefer to commit a self-documenting `.env` file (no values, key names only) which can be used as a reference.
+Instead of having to document and validate this manually, I prefer to commit a self-documenting `.env.example` file that may have placeholder or example values filled in. This can be used as a template or starting point for an actual `.env` file.

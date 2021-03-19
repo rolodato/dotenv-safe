@@ -34,14 +34,14 @@ describe('dotenv-safe', () => {
     });
 
     it('does not throw error when all is well', () => {
-        assert.isOk(dotenv.load({
+        assert.isOk(dotenv.config({
             example: 'envs/.env.success',
             path: 'envs/.env'
         }));
     });
 
     it('does not throw error when variable exists but is empty and allowEmptyValues option is true', () => {
-        assert.isOk(dotenv.load({
+        assert.isOk(dotenv.config({
             example: 'envs/.env.allowEmpty',
             path: 'envs/.env',
             allowEmptyValues: true
@@ -51,7 +51,7 @@ describe('dotenv-safe', () => {
     it('does not throw error when .env is missing but variables exist', () => {
         process.env.HELLO = 'WORLD';
 
-        assert.isOk(dotenv.load({
+        assert.isOk(dotenv.config({
             example: 'envs/.env.noDotEnv'
         }));
     });
@@ -66,7 +66,7 @@ describe('dotenv-safe', () => {
 
     it('throws error when a variable is missing', () => {
         assert.throws(() => {
-            dotenv.load({
+            dotenv.config({
                 example: 'envs/.env.fail',
                 path: 'envs/.env'
             });
@@ -75,7 +75,7 @@ describe('dotenv-safe', () => {
 
     it('throws error when a variable exists but is empty and allowEmptyValues option is false', () => {
         assert.throws(() => {
-            dotenv.load({
+            dotenv.config({
                 example: 'envs/.env.allowEmpty',
                 path: 'envs/.env',
                 allowEmptyValues: false
@@ -85,7 +85,7 @@ describe('dotenv-safe', () => {
 
     it('throws error when a variable does not exist and allowEmptyValues option is true', () => {
         assert.throws(() => {
-            dotenv.load({
+            dotenv.config({
                 example: 'envs/.env.fail',
                 path: 'envs/.env',
                 allowEmptyValues: true
@@ -104,7 +104,7 @@ describe('dotenv-safe', () => {
     });
 
     it('returns an object with parsed .env', () => {
-        const result = dotenv.load({
+        const result = dotenv.config({
             example: 'envs/.env.allowEmpty',
             path: 'envs/.env',
             allowEmptyValues: true
@@ -116,7 +116,7 @@ describe('dotenv-safe', () => {
     });
 
     it('returns an object with values from process.env in case when .env does not exist', () => {
-        const result = dotenv.load({
+        const result = dotenv.config({
             example: 'envs/.env.noDotEnv'
         });
         assert.deepEqual({}, result.parsed);
@@ -125,7 +125,7 @@ describe('dotenv-safe', () => {
     });
 
     it('does not overwrite externally set environment variables', () => {
-        const result = dotenv.load({
+        const result = dotenv.config({
             example: 'envs/.env.success',
             path: 'envs/.env'
         });
