@@ -91,7 +91,7 @@ This is the preferred approach when using import instead of require.
 $ node -r dotenv-safe/config your_script.js
 ```
 
-[See the dotenv README for more information]((https://github.com/motdotla/dotenv#preload)).
+[See the dotenv README for more information](https://github.com/motdotla/dotenv#preload).
 
 ## Continuous integration (CI)
 
