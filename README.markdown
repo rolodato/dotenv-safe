@@ -1,4 +1,5 @@
 # dotenv-safe [![Build Status](https://travis-ci.org/rolodato/dotenv-safe.svg)](https://travis-ci.org/rolodato/dotenv-safe)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Frolodato%2Fdotenv-safe.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Frolodato%2Fdotenv-safe?ref=badge_shield)
 
 Identical to [`dotenv`](https://github.com/motdotla/dotenv), but ensures that all needed environment variables are defined after reading from `.env`.
 The names of the needed variables are read from `.env.example`, which should be commited along with your project.
@@ -130,3 +131,7 @@ Defaults to `.env.example`.
 
 I regularly use apps that depend on `.env` files but don't validate if all the necessary variables have been defined correctly.
 Instead of having to document and validate this manually, I prefer to commit a self-documenting `.env.example` file that may have placeholder or example values filled in. This can be used as a template or starting point for an actual `.env` file.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Frolodato%2Fdotenv-safe.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Frolodato%2Fdotenv-safe?ref=badge_large)
