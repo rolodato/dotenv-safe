@@ -28,3 +28,5 @@ build/Release
 node_modules
 
 test/envs
+
+*~
