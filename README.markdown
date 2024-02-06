@@ -1,4 +1,4 @@
-# dotenv-safe [![Build Status](https://travis-ci.org/rolodato/dotenv-safe.svg)](https://travis-ci.org/rolodato/dotenv-safe)
+# dotenv-safe [![Build Status](https://github.com/rolodato/dotenv-safe/actions/workflows/node.js.yml/badge.svg)](https://github.com/rolodato/dotenv-safe/actions/workflows/node.js.yml)
 
 Identical to [`dotenv`](https://github.com/motdotla/dotenv), but ensures that all needed environment variables are defined after reading from `.env`.
 The names of the needed variables are read from `.env.example`, which should be commited along with your project.
