@@ -21,8 +21,8 @@
     "pretest": "./node_modules/eslint/bin/eslint.js index.js config.js MissingEnvVarsError.js test/.",
     "test": "HELLO=fromTheOtherSide mocha"
   },
-  "dependencies": {
-    "dotenv": "^8.2.0"
+  "peerDependencies": {
+    "dotenv": ">= 8.2.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
