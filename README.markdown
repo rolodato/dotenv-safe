@@ -8,7 +8,11 @@ The names of the needed variables are read from `.env.example`, which should be 
 # Installation
 
 ```
-npm install --save dotenv-safe
+npm install dotenv-safe
+```
+
+```
+pnpm install dotenv-safe
 ```
 
 ```
@@ -33,6 +37,14 @@ TOKEN=
 ```js
 // index.js
 require('dotenv-safe').config();
+```
+
+Or, if you are using [ES modules](https://nodejs.org/api/esm.html):
+
+```js
+// index.mjs
+import { config } from 'dotenv-safe';
+config();
 ```
 
 Since the provided `.env` file does not contain all the variables defined in
@@ -107,7 +119,7 @@ require('dotenv-safe').config({
 
 # Options
 
-[Same options and methods supported by `dotenv`](https://github.com/motdotla/dotenv#options).
+[Same options and methods supported by `dotenv`](https://github.com/motdotla/dotenv#options), in addition to the options below:
 
 ```js
 require('dotenv-safe').config({
@@ -115,6 +127,8 @@ require('dotenv-safe').config({
     example: './.my-env-example-filename'
 });
 ```
+
+Starting from version 9.0.0, `dotenv` is a peer dependency of `dotenv-safe`. This means that the actual version of `dotenv` used defaults to the latest available at install time, or whatever is specified by your application.
 
 ## `allowEmptyValues`
 
