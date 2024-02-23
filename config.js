@@ -1,5 +1,10 @@
 (function () {
     var options = {};
+
+    if (process.env.DOTENV_CONFIG_EXAMPLE != null) {
+        options.example = process.env.DOTENV_CONFIG_EXAMPLE;
+    }
+
     process.argv.forEach(function (val) {
         var matches = val.match(/^dotenv_config_(.+)=(.+)/);
         if (matches) {
