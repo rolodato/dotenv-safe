@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [9.1.0] - 2024-02-26
+### Added
+- Options specific to `dotenv-safe` (`example` and `allowEmptyValues`) can now be set with the `DOTENV_CONFIG_EXAMPLE` and `DOTENV_CONFIG_ALLOW_EMPTY_VALUES` environment variables when preloading.
+
 ## [9.0.0] - 2024-02-06
 ### Changed
 - *Breaking*: `dotenv` is now a [peer dependency](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#peerdependencies) of `dotenv-safe`. If you already use a previous `dotenv-safe` version in your application, your `package-lock.json` will already reference a specific `dotenv` version and no action is required. Otherwise, running `npm install dotenv-safe` will automatically install the latest `dotenv` version, which may have [breaking changes](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#peerdependencies). You can run `npm list dotenv` to confirm which `dotenv` version is being used by your application.
