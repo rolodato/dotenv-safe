@@ -16,7 +16,7 @@ pnpm install dotenv-safe
 ```
 
 ```
-yarn add dotenv-safe
+yarn add dotenv-safe dotenv
 ```
 
 # Example
